@@ -1,0 +1,52 @@
+/* General
+----------------------------------------------*/
+
+.margin-bottom {
+    margin-bottom: 10px;
+}
+
+
+/* Cart
+----------------------------------------------*/
+
+.cart {
+    height: 50px;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.cart .name {}
+
+.cart .number {
+    background: red;
+    color: white;
+    padding: 2px 5px;
+    border-radius: 5px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.cart span {
+    margin: 0 3px;
+}
+
+
+/* Admin Page
+----------------------------------------------*/
+
+#admin img {
+    height: 90px;
+    width: 70px;
+}
+
+#admin .add_product {
+    display: none;
+}

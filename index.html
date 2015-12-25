@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">
+                        jCart
+                    </a>
+                </div>
+                <div class="cart pull-right">
+                    <span class="name">Abanoub</span>
+                    <span class="number">0</span>
+                    <span class="icon">
+                        <i class="fa fa-shopping-cart fa-2x"></i>
+                    </span>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <section class="container">
+        <aside class="col-md-3">
+            <div class="list-group">
+                <a href="#" class="list-group-item active">Admin</a>
+                <a href="#" class="list-group-item">Website</a>
+                <a href="#" class="list-group-item">Checkout</a>
+            </div>
+        </aside>
+        <div class="content col-md-9">
+            <section id="admin">
+                <div class="margin-bottom">
+                    <button type="button" class="btn btn-success add">
+                        <i class="fa fa-plus"></i> Add Product
+                    </button>
+                </div>
+                <!-- end add button -->
+                <div class="row">
+                    <div class="add_product col-md-4">
+                        <form>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="product_name" placeholder="Enter Product Name">
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">EGP</div>
+                                    <input type="number" class="form-control" id="product_price" placeholder="Unit Price">
+                                    <div class="input-group-addon">.00</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="number" class="form-control" id="product_quantity" placeholder="Product Quantity">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="product_image" class="form-control" placeholder="Image Path">
+                                <!--                                <p class="help-block">Example block-level help text here.</p>-->
+                            </div>
+                            <button type="submit" class="btn btn-default">Submit</button>
+                        </form>
+                    </div>
+                </div>
+                <!-- end add product row -->
+                <div class="row">
+                    <table class="table table-hover">
+                        <thead>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Image</th>
+                            <th>Unit Price</th>
+                            <th>Stock</th>
+                            <th></th>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+            <!-- end admin section -->
+            <section class="website"></section>
+            <!-- end website section -->
+            <section class="checkout"></section>
+            <!-- end checkout section -->
+        </div>
+    </section>
+    <div class="clearfix"></div>
+    <footer>
+        <div class="container text-center">
+            ITI Intake 36 - Open Source CPD &copy; 2015
+        </div>
+    </footer>
+    <script src="js/jquery-1.11.3.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/class/database.js"></script>
+    <script src="js/class/modal.js"></script>
+    <script src="js/class/admin.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>
