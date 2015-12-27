@@ -75,17 +75,20 @@
     height: 50px;
 }
 
-#website .product {}
-
-#website .product {}
-
-#website .product {}
-
-
 /* Checkout Page
 ----------------------------------------------*/
 
 #checkout img {
     height: 90px;
     width: 70px;
+}
+
+#checkout .check_total{
+    display: none;
+    padding: 0 50px 0 0;
+}
+
+#checkout .check_total{
+    font-weight: bold;
+    font-size: 20px;
 }

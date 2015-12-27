@@ -2,7 +2,11 @@
  * Checkout page Object
  */
 var Checkout = function(database, cart) {
+    // self is a workaround to use 'this' inside jquery functions
+    self = this;
+
     Section.call(this); // call super constructor.
+
     this.id = 'checkout';
     /**
      * Generate html table row(s) of product object
@@ -11,7 +15,7 @@ var Checkout = function(database, cart) {
      */
     this.generateHTML = function(object) {
         var html = '';
-        if (object instanceof Array) {
+        if (object.length > 0) {
             for (var i = 0; i < object.length; ++i) {
                 html += '<tr id="' + object[i].id + '">';
                 html += '<td><img src="' + object[i].image + '"/></td>';
@@ -44,8 +48,41 @@ var Checkout = function(database, cart) {
         this.selection.remove();
     };
 
-    this.clearHTML();
-    this.append('table tbody', this.generateHTML(cart.products));
+    this.calculateTotal = function(){
+        var total = 0;
+        for (var i = 0; i < cart.products.length; ++i) {
+            total += (cart.products[i].price * cart.products[i].quantity);
+        }
+        return total;
+    };
+
+    this.init = function(){
+        // Clear table content
+        this.clearHTML();
+        this.setSelector('table');
+        // Show table in-case if it was hidden
+        this.selection.show();
+        this.setSelector('.emptyCart');
+        // Remove div empty cart if exist
+        this.selection.remove();
+
+        var htemp = this.generateHTML(cart.products);
+        if(htemp.length > 0){
+            this.append('table tbody', this.generateHTML(cart.products));
+            this.setSelector('.check_total');
+            this.selection.show();
+            this.setSelector('.total .value');
+            this.selection.text(this.calculateTotal());
+        }else{
+            this.setSelector('table');
+            this.selection.hide();
+            this.append('', '<div class="emptyCart">Cart is empty</div>');
+            this.setSelector('.check_total');
+            this.selection.hide();
+        }
+    };
+
+    this.init();
     /**
      * Click event for plus button, using delegate event handler from jquery
      * to apply it for future created elements
@@ -58,7 +95,9 @@ var Checkout = function(database, cart) {
      * Updating cart.products is very important, to save values when switching to 
      * another page 
      */
-    $('#' + this.id).delegate('.plus', 'click', function() {
+    $('#' + this.id).delegate('.plus', 'click', function(e) {
+        e.stopImmediatePropagation();
+        //console.log('clicked');
         // Get element id
         var id = $(this).parent().parent().attr('id');
         // Get equivalent cart object
@@ -68,6 +107,8 @@ var Checkout = function(database, cart) {
 
         if (cart_object.stock > cart_object.quantity) {
             quantity_element.text(++cart_object.quantity);
+            self.setSelector('.total .value');
+            self.selection.text(self.calculateTotal());
         }
         // console.log(cart.products);
     });
@@ -81,7 +122,33 @@ var Checkout = function(database, cart) {
 
         if (cart_object.quantity > 0) {
             quantity_element.text(--cart_object.quantity);
+            self.setSelector('.total .value');
+            self.selection.text(self.calculateTotal());
         }
+    });
+
+    $('#' + this.id).delegate('.delete', 'click', function(){
+        var id = $(this).parent().parent().attr('id');
+        self.deleteRow('#' + id);
+        cart.remove(id);
+        self.init();
+    });
+
+    $('#' + this.id).delegate('.checkout', 'click', function(e){
+        e.stopImmediatePropagation();
+        for (var i = 0; i < cart.products.length; ++i) {
+            var id = cart.products[i].id;
+            var product_object = database.getRow(id);
+            product_object.stock -= cart.products[i].quantity;
+        }
+        self.clearHTML();
+        self.setSelector('table');
+        self.selection.hide();
+        self.append('', '<div class="emptyCart">Cart is empty</div>');
+        self.setSelector('.check_total');
+        self.selection.hide();
+        cart.clearCart();
+        cart.updateCartCounter();
     });
 
 };

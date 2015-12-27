@@ -63,4 +63,8 @@ var Cart = function() {
         };
         return found;
     };
+
+    this.clearCart = function(){
+        this.products = [];
+    };
 };

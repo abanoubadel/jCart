@@ -17,7 +17,7 @@ var main = function() {
      * Change layout based on specified input
      * @param  {string} section 
      */
-    this.switchTo = function(section) {;
+    this.switchTo = function(section) {
         $('#' + this.active).fadeOut();
         $('#' + section).fadeIn();
         // set current active sections
