@@ -5,20 +5,21 @@
  * @param {int} id
  * @param {string} title
  * @param {string} content [may be html]
- * @param {array} btns [buttons in the popup]
- * @param {string} selectorListener [button that will trigger the popup]
+ * @param {string} btn [confirm button in the popup]
  * @param {function} callback [function will be executed after pressing confirm]
  * 
  */
-var Modal = function(id, title, content, btns, selectorListener, callback) {
+var Modal = function(id, title, content, btn, callback) {
+    var self = this;
     this.id = id;
     this.title = title;
     this.content = content;
     // Buttons that will be at the bottom of popup
     this.btns = [
-        '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>',
-        '<button type="button" class="btn btn-primary confirm_delete">Delete</button>'
+        '<button type="button" class="btn btn-default close_' + btn + '" data-dismiss="modal">Close</button>',
+        '<button type="button" class="btn btn-primary confirm_' + btn + '">' + btn + '</button>'
     ];
+
     // Variable containes the header div of modal
     this.header = '<div class="modal-header">';
     this.header += '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
@@ -60,7 +61,13 @@ var Modal = function(id, title, content, btns, selectorListener, callback) {
         // Activating Modal
         $('#' + this.id).modal();
         // Add confirm button listener ( in our case confirm is delete button)
-        $(selectorListener).on('click', callback);
+        $('.confirm_' + btn).on('click', callback);
+        $('.close_' + btn).on('click', function() {
+            self.hide();
+        });
+        $('#' + this.id).on('hidden.bs.modal', function() {
+            self.delete();
+        });
     };
     /**
      * Delete Modal form body
@@ -69,4 +76,10 @@ var Modal = function(id, title, content, btns, selectorListener, callback) {
         $('#' + this.id).remove();
         $('.modal-backdrop').remove();
     };
+
+    this.hide = function() {
+        $('#' + this.id).modal('hide');
+    };
+
+    this.appendToDom(this.generateHTML());
 };

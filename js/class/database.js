@@ -76,6 +76,14 @@ var Database = function() {
         };
     };
 
+    this.getRow = function(id) {
+        for (var i = 0; i < this.data.length; ++i) {
+            if (this.data[i].id == id) {
+                return this.data[i];
+            }
+        };
+    };
+
     this.getData = function() {
         return this.data[dataCounter++];
     };

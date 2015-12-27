@@ -50,3 +50,42 @@
 #admin .add_product {
     display: none;
 }
+
+
+/* Website Page
+----------------------------------------------*/
+
+#website .product .thumbnail .image {
+    height: 180px;
+    overflow: hidden;
+}
+
+#website .product .thumbnail img {
+    width: 100%;
+    margin-top: -20px;
+}
+
+#website .product a {
+    display: block;
+}
+
+#website .product h3 {
+    margin-top: 10px;
+    font-size: 18px;
+    height: 50px;
+}
+
+#website .product {}
+
+#website .product {}
+
+#website .product {}
+
+
+/* Checkout Page
+----------------------------------------------*/
+
+#checkout img {
+    height: 90px;
+    width: 70px;
+}
