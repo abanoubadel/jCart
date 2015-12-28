@@ -41,7 +41,7 @@ var Website = function(database, cart) {
         e.preventDefault();
         var id = $(this).parents('.product').attr('id');
         cart.add(database.getRow(id));
-        console.log(cart.products);
+        //console.log(cart.products);
         $(this).removeClass('btn-default');
         $(this).removeClass('add_to_cart');
         $(this).addClass('btn-success');

@@ -27,7 +27,7 @@ var Admin = function(database) {
                 html += '<td>' + object[i].id + '</td>';
                 html += '<td>' + object[i].name + '</td>';
                 html += '<td><img src="' + object[i].image + '"/></td>';
-                html += '<td>' + object[i].price + ' EGP</td>';
+                html += '<td><span>' + object[i].price + '</span> EGP</td>';
                 html += '<td>' + object[i].stock + '</td>';
                 html += '<td> <button class="btn btn-primary edit" type="submit">Edit</button> <button class="btn btn-danger delete" type="submit">Delete</button></td>';
                 html += '</tr>';
@@ -122,9 +122,57 @@ var Admin = function(database) {
     /**
      * Edit product button event
      */
-    $('body').delegate('.edit', 'click', function() {
-        var id = $(this).parent().parent().attr('id');
+    $('body').delegate('.edit', 'click', function(e) {
+        e.stopImmediatePropagation();
+        var parent = $(this).parent().parent();
+        var id = parent.attr('id');
+        var object = database.getRow(id);
 
+        $(this).text('Save');
+        $(this).removeClass('btn-primary');
+        $(this).removeClass('edit');
+        $(this).addClass('btn-success');
+        $(this).addClass('save');
+
+        var name = parent.children().eq(1);
+        var image = parent.children().eq(2);
+        var price = parent.children().eq(3);
+        var stock = parent.children().eq(4);
+        //parent.children().eq(5).find('.delete').remove();
+
+        name.html('<input type="text" class="form-control" value="'+ object.name +'">');
+        image.html('<input type="text" class="form-control" value="'+ object.image +'">');
+        price.html('<input type="text" style="width: 90px;" class="form-control" value="'+ object.price + '">');
+        stock.html('<input type="number" style="width: 60px;" class="form-control" value="'+ object.stock +'">');
+
+    });
+
+    $('body').delegate('.save', 'click', function(e) {
+        e.stopImmediatePropagation();
+        var parent = $(this).parent().parent();
+        var id = parent.attr('id');
+        var object = database.getRow(id);
+
+        $(this).text('Edit');
+        $(this).addClass('btn-primary');
+        $(this).addClass('edit');
+        $(this).removeClass('btn-success');
+        $(this).removeClass('save');
+
+        var name = parent.children().eq(1);
+        var image = parent.children().eq(2);
+        var price = parent.children().eq(3);
+        var stock = parent.children().eq(4);
+
+        object.name = name.find('input').val();
+        object.image = image.find('input').val();
+        object.stock = stock.find('input').val();
+        object.price = price.find('input').val();
+
+        name.text(name.find('input').val());
+        image.html('<img src="'+ image.find('input').val() + '" />');
+        price.html('<span>' + price.find('input').val() + '</span> EGP');
+        stock.text(stock.find('input').val());
     });
 };
 

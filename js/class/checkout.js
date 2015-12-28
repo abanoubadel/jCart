@@ -1,7 +1,7 @@
 /**
  * Checkout page Object
  */
-var Checkout = function(database, cart) {
+var Checkout = function(database, cart, caller) {
     // self is a workaround to use 'this' inside jquery functions
     self = this;
 
@@ -149,6 +149,16 @@ var Checkout = function(database, cart) {
         self.selection.hide();
         cart.clearCart();
         cart.updateCartCounter();
+        var modal = new Modal(
+            'Success',
+            'Success',
+            'Thank you for buying from our store, ',
+            'Ok',
+            function(){
+                modal.hide();
+                caller.switchTo('website');
+            }
+        );
     });
 
 };

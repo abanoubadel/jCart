@@ -23,6 +23,7 @@ var main = function() {
         // set current active sections
         this.active = section;
         this.makeInstance(this.active);
+        this.setTab();
         // console.log(this.code);
     };
     /**
@@ -35,7 +36,7 @@ var main = function() {
         // this act like var website = new Website();
         // way to make the code more abstract
         this.code = eval(section);
-        this.section = new this.code(database, cart);
+        this.section = new this.code(database, cart, this);
     };
 
     this.init = function() {
@@ -57,16 +58,30 @@ var main = function() {
         this.makeInstance(this.active);
     };
 
+    this.setTab = function(){
+        this.tabs.each(function() {
+            var href = $(this).attr('href');
+            href = href.replace('#', '');
+            if (href == self.active) {
+                $(this).addClass('active');
+            }else{
+                $(this).removeClass('active');
+            }
+        });
+    };
+
     this.init();
     /**
      * Tabs click listener
      */
     $('.list-group-item').click(function(e) {
         e.preventDefault();
-        var href = $(this).attr('href');
-        href = href.replace('#', '');
-        self.switchTo(href);
-        $('.list-group-item.active').removeClass('active');
-        $(this).addClass('active');
+        if($(this).hasClass('active') == false){
+            var href = $(this).attr('href');
+            href = href.replace('#', '');
+            self.switchTo(href);
+            $('.list-group-item.active').removeClass('active');
+            $(this).addClass('active');
+        }
     });
 }();
